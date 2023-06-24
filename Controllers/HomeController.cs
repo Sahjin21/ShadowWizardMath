@@ -13,7 +13,7 @@ namespace ShadowWizardMath.Controllers
             _logger = logger;
         }
 
-        public IActionResult LevelView()
+        public IActionResult LevelView(string playerName)
         {
             var level = new Level();
             level.Stage = 1;
@@ -25,6 +25,11 @@ namespace ShadowWizardMath.Controllers
             // Add enemies to the level's Enemies list
             level.Enemies.Add(goblin1);
             level.Enemies.Add(goblin2);
+
+            // Set the player's name
+            var player = new Player { PlayerName = playerName };
+            level.Player = player;
+            level.Player.Health = 100;
 
             // Pass the Level object to the view
             return View(level);

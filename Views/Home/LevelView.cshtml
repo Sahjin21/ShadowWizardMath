@@ -7,13 +7,22 @@
 </head>
 <body>
     <h1>Level @Model.Stage</h1>
+
+    <h2>Player:</h2>
     <img src="~/art/PlaceHolderCharacter.png" alt="Character">
-    <ul>
-        @foreach (var enemy in Model.Enemies)
-        {
-            <li>@enemy.Name - @enemy.Description</li>
-            <img src = "~/art/Goblin.png" alt = "Enemy" >
-        }
-    </ul>
+    <p>Name: @Model.Player.PlayerName</p>
+    <p>Coins: @Model.Player.Coins</p>
+    <p>Health: @Model.Player.Health</p>
+
+    <h2>Enemies:</h2>
+    @foreach (var enemy in Model.Enemies)
+    {
+        <div>
+            <p>Name: @enemy.Name</p>
+            <p>Description: @enemy.Description</p>
+            <p>Health: @enemy.Health</p>
+            <img src="~/art/Goblin.png" alt="Enemy">
+        </div>
+    }
 </body>
 </html>
