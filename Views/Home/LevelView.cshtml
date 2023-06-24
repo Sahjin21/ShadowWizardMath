@@ -1,0 +1,19 @@
+﻿@model ShadowWizardMath.Models.Level
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level View</title>
+</head>
+<body>
+    <h1>Level @Model.Stage</h1>
+    <img src="~/art/PlaceHolderCharacter.png" alt="Character">
+    <ul>
+        @foreach (var enemy in Model.Enemies)
+        {
+            <li>@enemy.Name - @enemy.Description</li>
+            <img src = "~/art/Goblin.png" alt = "Enemy" >
+        }
+    </ul>
+</body>
+</html>
