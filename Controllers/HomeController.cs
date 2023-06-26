@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShadowWizardMath.Models;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace ShadowWizardMath.Controllers
 {
@@ -17,6 +18,7 @@ namespace ShadowWizardMath.Controllers
         {
             var level = new Level();
             level.Stage = 1;
+            System.Diagnostics.Debug.WriteLine("Current level: " + level.Stage);
 
             // Create enemy objects
             var goblin1 = new Goblin("Goblin 1", "A small green creature.", 100, 1, 10, 3);
