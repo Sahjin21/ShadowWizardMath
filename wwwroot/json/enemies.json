@@ -1,0 +1,16 @@
+{
+  "enemies": [
+    {
+      "name": "Goblin",
+      "level": 1,
+      "hp": 100,
+      "sprite": "~/art/enemies/Goblin.png"
+    },
+    {
+      "name": "Wolf",
+      "level": 1,
+      "hp": 100,
+      "sprite": "~/art/enemies/Goblin.png"
+    }
+  ]
+}

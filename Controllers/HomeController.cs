@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShadowWizardMath.Models;
 using System.Diagnostics;
 using System.Reflection;
+using System.Resources;
 
 namespace ShadowWizardMath.Controllers
 {
@@ -20,20 +22,21 @@ namespace ShadowWizardMath.Controllers
             level.Stage = 1;
             System.Diagnostics.Debug.WriteLine("Current level: " + level.Stage);
 
-            // Create enemy objects
-            var goblin1 = new Goblin("Goblin 1", "A small green creature.", 100, 1, 10, 3);
-            var goblin2 = new Goblin("Goblin 2", "Another small green creature.", 100, 1, 10, 3);
-
-            // Add enemies to the level's Enemies list
-            level.Enemies.Add(goblin1);
-            level.Enemies.Add(goblin2);
+            // Deserialize enemy data json file
+            string jsonFilePath = "wwwroot/json/enemies.json";
+            string jsonString = System.IO.File.ReadAllText(jsonFilePath);
+            var json = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<Enemy>>>(jsonString);
+            var enemyList = json["enemies"].ToArray();          
+            ViewBag.Enemy = enemyList.Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
+            ViewBag.levelOneEnemies = enemyList.Where(e => e.level == 1).Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
 
             // Set the player's name
             var player = new Player { PlayerName = playerName };
             level.Player = player;
             level.Player.Health = 100;
 
-            // Pass the Level object to the view
+            //System.Diagnostics.Debug.WriteLine();
+            // Pass the level object to the view
             return View(level);
         }
 

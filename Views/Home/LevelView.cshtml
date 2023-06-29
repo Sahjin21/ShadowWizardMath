@@ -33,19 +33,20 @@
 
         <!-- Displaying enemies information -->
     <h2>Enemies:</h2>
-
-    <!-- This pulls from the enemies set in the controller 'level.Enemies.Add(goblin1);'. It is set this way just for testing
-        I would like to create a json database of enemies and let it pull randomly as you progress up until a boss or something.
-    -->
-    @foreach (var enemy in Model.Enemies)
-    {
-        <div>
-            <p>Name: @enemy.Name</p>
-            <p>Description: @enemy.Description</p>
-            <p>Health: @enemy.Health</p>
-            <img src="~/art/Goblin.png" alt="Enemy">
-        </div>
-    }
+        <!-- Displaying all level 1 enemies images -->
+        @foreach (var enemy in ViewBag.levelOneEnemies)
+        {
+@*            <img src="@enemy.sprite" alt="@enemy.name">*@
+            <p>@enemy.Text</p>
+        }
     </form>
 </body>
 </html>
+
+@{
+    // JavaScript code block
+    <script>
+        // Log the enemies list to the browser's console
+        console.log(@Html.Raw(Json.Serialize(ViewBag.levelOneEnemies)));
+    </script>
+}
