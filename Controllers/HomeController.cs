@@ -26,9 +26,17 @@ namespace ShadowWizardMath.Controllers
             string jsonFilePath = "wwwroot/json/enemies.json";
             string jsonString = System.IO.File.ReadAllText(jsonFilePath);
             var json = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<Enemy>>>(jsonString);
-            var enemyList = json["enemies"].ToArray();          
-            ViewBag.Enemy = enemyList.Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
-            ViewBag.levelOneEnemies = enemyList.Where(e => e.level == 1).Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
+            var enemyList = json["enemies"].ToArray();
+
+            //ViewBag.Enemy = enemyList.Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
+            //ViewBag.levelOneEnemies = enemyList.Where(e => e.level == 1).Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
+            // Generate a random list of enemies for infinite mode
+            var random = new Random();
+            var randomEnemies = enemyList.OrderBy(x => random.Next()).ToList();
+
+            // Pass the random list of enemies to the view
+            //ViewBag.levelEnemies = randomEnemies.Select(a => new SelectListItem { Text = a.name, Value = a.name }).ToList();
+            ViewBag.levelEnemies = randomEnemies;
 
             // Set the player's name
             var player = new Player { PlayerName = playerName };

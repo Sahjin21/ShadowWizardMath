@@ -2,7 +2,7 @@
 
 @{
     // Calculate the background image URL based on the level
-    var backgroundImageUrl = Model.Stage == 1 ? "~/art/Backgrounds/background_layer_1.png" : 
+    var backgroundImageUrl = Model.Stage == 1 ? "~/art/Backgrounds/background_layer_1.png" :
     Model.Stage == 2 ? "~/art/Backgrounds/background_layer_2.png" :
                              "";
 }
@@ -11,42 +11,52 @@
 <head>
     <title>Level View</title>
     <link rel="stylesheet" href="/css/site.css" />
+    <style>
+        /* Add styles for the game container */
+        #game-container {
+            width: 1280px;
+            height: 720px;
+            margin: 0 auto;
+            background-image: url('@Url.Content(backgroundImageUrl)');
+            background-repeat: repeat-x;
+            background-size: 1000px 600px;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-        <!-- Can probably move some of this to css later-->
-    <form style="background-image: url('@Url.Content(backgroundImageUrl)');background-repeat: repeat-x; background-size: 1000px 600px;">
+    <!-- Your game container -->
+    <div id="game-container">
 
         <!--This pulls the level from the controller 'level.Stage = 1;'-->
-    <h1>Level @Model.Stage</h1>
+        <h1>Level @Model.Stage</h1>
 
         <!--This declares the file name of the background image which is set by the stage. -->
-    @if (Model.Stage == 1)
-    {
-        <div class="background-layer"></div>
-    }
+        @if (Model.Stage == 1)
+        {
+            <div class="background-layer"></div>
+        }
+
         <!-- Displaying player information -->
-    <h2>Player:</h2>
-    <img src="~/art/PlaceHolderCharacter.png" alt="Character">
-    <p>Name: @Model.Player.PlayerName</p>
-    <p>Coins: @Model.Player.Coins</p>
-    <p>Health: @Model.Player.Health</p>
+        <h2>Player:</h2>
+        <img src="~/art/something_verysimple.gif" alt="Character">
+        <p>Name: @Model.Player.PlayerName</p>
+        <p>Coins: @Model.Player.Coins</p>
+        <p>Health: @Model.Player.Health</p>
 
         <!-- Displaying enemies information -->
-    <h2>Enemies:</h2>
+        <h2>Enemies:</h2>
         <!-- Displaying all level 1 enemies images -->
-        @foreach (var enemy in ViewBag.levelOneEnemies)
+        @foreach (var enemy in ViewBag.levelEnemies)
         {
-@*            <img src="@enemy.sprite" alt="@enemy.name">*@
-            <p>@enemy.Text</p>
+            <p>@enemy.name</p>
+            <p>@enemy.hp</p>
         }
-    </form>
+    </div> <!-- End of game container -->
+    <!-- Link your JavaScript file for game logic -->
+    <script src="script.js"></script>
+
+    @* Move the JavaScript code block to the bottom *@
 </body>
 </html>
-
-@{
-    // JavaScript code block
-    <script>
-        // Log the enemies list to the browser's console
-        console.log(@Html.Raw(Json.Serialize(ViewBag.levelOneEnemies)));
-    </script>
-}
