@@ -1,62 +1,143 @@
 ﻿@model ShadowWizardMath.Models.Level
 
-@{
-    // Calculate the background image URL based on the level
-    var backgroundImageUrl = Model.Stage == 1 ? "~/art/Backgrounds/background_layer_1.png" :
-    Model.Stage == 2 ? "~/art/Backgrounds/background_layer_2.png" :
-                             "";
-}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Level View</title>
     <link rel="stylesheet" href="/css/site.css" />
+
+    @*import JQuery*@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         /* Add styles for the game container */
         #game-container {
-            width: 1280px;
-            height: 720px;
+            width: 1152px;
+            height: 500px;
             margin: 0 auto;
-            background-image: url('@Url.Content(backgroundImageUrl)');
-            background-repeat: repeat-x;
-            background-size: 1000px 600px;
+            background-color: black;
             position: relative;
             overflow: hidden;
+        }
+
+        /* CSS for the background image */
+        .background-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1152px;
+            height: 400px; 
+            background-size: 100% auto;
+            background-repeat: no-repeat; /* Prevent vertical repeating */
+            animation: scrollBackground 10s linear infinite;
+        }
+
+        /* CSS for the frame container */
+        #frame-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1152px; /* Adjust the width according to your frame image size */
+            height: 400px; /* Adjust the height according to your frame image size */
+            overflow: hidden; /* Hide any overflow from the background image */
+        }
+
+        /* CSS for the character image */
+        #character-image {
+            position: absolute;
+            top: 0; /* Adjust the top position to place the character where you want */
+            left: 0; /* Adjust the left position to place the character where you want */
+            z-index: 9999; /* Set a high z-index value to make sure the character is displayed above other elements */
+            transform: translateY(130px) translateX(130px) scale(2);     
+        }
+        /* CSS for the first enemy sprite */
+        #first-enemy {
+            position: absolute;
+            top: 0; /* Adjust the top position as needed */
+            left: 0; /* Adjust the left position as needed */
+            z-index: 9999; /* Set a high z-index value to make sure the enemy is displayed above other elements */
+            transform: translateY(130px) translateX(700px) scale(2); /* Adjust the scale to make the enemy bigger, if desired */
+        }
+        /* Add styles for the player info container */
+        .player-info {
+            position: absolute;
+            top: 370px; /* Adjust the vertical position */
+            left: 100px; /* Adjust the horizontal position */
+            font-size: 20px;
+            color: white;
+            display: flex; /* Use flexbox for better layout control */
+            align-items: center; /* Align items vertically in the center */
+            transform: scale(2);
+        }
+
+        /* Add styles for the player details */
+        .player-details {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <!-- Your game container -->
     <div id="game-container">
-
-        <!--This pulls the level from the controller 'level.Stage = 1;'-->
+        <!-- This pulls the level from the controller 'level.Stage = 1;' -->
         <h1>Level @Model.Stage</h1>
 
-        <!--This declares the file name of the background image which is set by the stage. -->
+        <!-- This declares the file name of the background image which is set by the stage. -->
         @if (Model.Stage == 1)
         {
-            <div class="background-layer"></div>
+            <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/Backgroundrunner.png')"></div>
         }
-
+        <!-- You can add other levels' background images similarly if needed -->
         <!-- Displaying player information -->
         <h2>Player:</h2>
-        <img src="~/art/something_verysimple.gif" alt="Character">
-        <p>Name: @Model.Player.PlayerName</p>
-        <p>Coins: @Model.Player.Coins</p>
-        <p>Health: @Model.Player.Health</p>
+        <img id="character-image" src="~/art/Shadow%20Wizard%20Player/Shadow-wizard-armed-idle.gif" alt="Character">
+        <div class="player-info">
+            <div class="player-details">
+                <p>@Model.Player.PlayerName</p>
+                <p>Coins: @Model.Player.Coins</p>
+            </div>
+        </div>
 
         <!-- Displaying enemies information -->
         <h2>Enemies:</h2>
-        <!-- Displaying all level 1 enemies images -->
-        @foreach (var enemy in ViewBag.levelEnemies)
+        <!-- Displaying the sprite for the first enemy on top of other elements -->
+        @if (ViewBag.levelEnemies.Count > 0)
         {
-            <p>@enemy.name</p>
-            <p>@enemy.hp</p>
+            var firstEnemy = ViewBag.levelEnemies[0];
+            <img id="first-enemy" src="@firstEnemy.sprite" alt="Enemy">
         }
-    </div> <!-- End of game container -->
-    <!-- Link your JavaScript file for game logic -->
-    <script src="script.js"></script>
 
-    @* Move the JavaScript code block to the bottom *@
+
+        <!-- Next Stage button -->
+        <button id="nextStageButton">Next Stage</button>
+
+        <!-- Your frame container -->
+        <div id="frame-container">
+            <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png')"></div>
+            <div id="main-frame"></div>
+        </div>
+
+        <script>
+            // JavaScript/jQuery code for cycling through different backgrounds on button click
+            $(document).ready(function () {
+                var backgrounds = [
+                    "/art/Backgrounds/Regular%20Background/Backgroundrunner.png",
+                    "/art/Backgrounds/background_layer_2.png",
+                    "/art/Backgrounds/background_layer_3.png"
+                ];
+
+                var currentIndex = 0;
+
+                $("#nextStageButton").click(function () {
+                    currentIndex++;
+                    if (currentIndex >= backgrounds.length) {
+                        currentIndex = 0;
+                    }
+
+                    $(".background-layer").css("background-image", "url(" + backgrounds[currentIndex] + ")");
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>

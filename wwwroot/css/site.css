@@ -1,32 +1,34 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
+/* Add styles for the game container */
 #game-container {
-    width: 1280px;
-    height: 720px;
+    width: 852px;
+    height: 500px;
     margin: 0 auto;
     background-color: black;
     position: relative;
+    padding: 0;
     overflow: hidden;
 }
+
+/* CSS for the background image */
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1152px; /* Adjust the width according to your frame image size */
+    height: 288px; /* Adjust the height according to your frame image size */
+    background-size: 100% auto;
+    background-repeat: no-repeat; /* Prevent vertical repeating */
+    animation: scrollBackground 10s linear infinite;
+}
+
+/* CSS for the frame container */
+#frame-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12562px; /* Adjust the width according to your frame image size */
+    height: 288px; /* Adjust the height according to your frame image size */
+    overflow: hidden; /* Hide any overflow from the background image */
+}
+
+

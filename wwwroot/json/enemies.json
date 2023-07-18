@@ -1,16 +1,28 @@
 {
   "enemies": [
     {
-      "name": "Goblin",
+      "name": "Bandit",
       "level": 1,
       "hp": 100,
-      "sprite": "~/art/enemies/Goblin.png"
+      "sprite": "/art/EnemiesandBosses/Bandit/bandit-regular-idle.gif"
     },
     {
-      "name": "Wolf",
+      "name": "Boar",
       "level": 1,
       "hp": 100,
-      "sprite": "~/art/enemies/Goblin.png"
+      "sprite": "/art/EnemiesandBosses/Boar/boar-regular-idle.gif"
+    },
+    {
+      "name": "Duck",
+      "level": 1,
+      "hp": 100,
+      "sprite": "/art/EnemiesandBosses/Duck/duck-regular-idle.gif"
+    },
+    {
+      "name": "Mage",
+      "level": 1,
+      "hp": 100,
+      "sprite": "/art/EnemiesandBosses/Mage/Mage-regular-idle.gif"
     }
   ]
 }
