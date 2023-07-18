@@ -10,6 +10,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
+        /* CSS for the frame container */
+        #frame-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1152px; /* Adjust the width according to your frame image size */
+            height: 400px; /* Adjust the height according to your frame image size */
+            overflow: hidden; /* Hide any overflow from the background image */
+            z-index: 10;
+        }
         /* Add styles for the game container */
         #game-container {
             width: 1152px;
@@ -32,15 +42,7 @@
             animation: scrollBackground 10s linear infinite;
         }
 
-        /* CSS for the frame container */
-        #frame-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1152px; /* Adjust the width according to your frame image size */
-            height: 400px; /* Adjust the height according to your frame image size */
-            overflow: hidden; /* Hide any overflow from the background image */
-        }
+
 
         /* CSS for the character image */
         #character-image {
@@ -74,11 +76,30 @@
         .player-details {
             margin-left: 10px;
         }
+
+        #nextStageButton {
+            position: absolute;
+            top: 15px; /* Adjust the vertical position */
+            right: 10px; /* Adjust the horizontal position */
+            z-index: 2; /* Set a higher z-index value to keep it on top */
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #258cfb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 11;
+        }
     </style>
 </head>
 <body>
     <!-- Your game container -->
     <div id="game-container">
+        <!-- Your frame container -->
+        <div id="frame-container">
+            <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png')"></div>
+            <div id="main-frame"></div>
+        </div>
         <!-- This pulls the level from the controller 'level.Stage = 1;' -->
         <h1>Level @Model.Stage</h1>
 
@@ -111,19 +132,18 @@
         <!-- Next Stage button -->
         <button id="nextStageButton">Next Stage</button>
 
-        <!-- Your frame container -->
-        <div id="frame-container">
-            <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png')"></div>
-            <div id="main-frame"></div>
-        </div>
+
 
         <script>
             // JavaScript/jQuery code for cycling through different backgrounds on button click
             $(document).ready(function () {
                 var backgrounds = [
                     "/art/Backgrounds/Regular%20Background/Backgroundrunner.png",
-                    "/art/Backgrounds/background_layer_2.png",
-                    "/art/Backgrounds/background_layer_3.png"
+                    "/art/Backgrounds/Black%20Background/Black-Backgroundrunner.png",
+                    "/art/Backgrounds/Blue%20Background/Blue-Backgroundrunner.png",
+                    "/art/Backgrounds/Green%20Background/Green-Backgroundrunner.png",
+                    "/art/Backgrounds/Purple%20Background/Purple-Backgroundrunner.png",
+                    "/art/Backgrounds/Red%20Background/Red-Backgroundrunner.png",
                 ];
 
                 var currentIndex = 0;
