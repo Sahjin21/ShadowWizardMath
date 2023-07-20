@@ -40,5 +40,22 @@
             correctAnswer = CalculateAnswer(operand1, @operator, operand2);
         }
 
+        private static Random random = new Random();
+
+        public List<int> Shuffle(List<int> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                int value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+            return list;
+        }
+
     }
+
 }

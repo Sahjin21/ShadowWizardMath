@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShadowWizardMath.Models;
 using System.Diagnostics;
+using System.Numerics;
 using System.Reflection;
 using System.Resources;
 
@@ -39,12 +40,24 @@ namespace ShadowWizardMath.Controllers
             var player = new Player { PlayerName = playerName };
             level.Player = player;
             level.Player.Health = 100;
+            level.Player.Coins = 0;
 
             //System.Diagnostics.Debug.WriteLine();
             // Pass the level object to the view
             return View(level);
         }
+        [HttpPost]
+        public IActionResult UpdateCoins(int coinsToAdd)
+        {
+            // Get the player object from ViewBag or ViewData
+            var player = ViewBag.Player as Player; // Or use ViewData["Player"] as Player;
+            // Update the player's coins
+            player.Coins += coinsToAdd;
+            
 
+            // Return a JSON response indicating success
+            return Json(new { success = true });
+        }
         public IActionResult Index()
         {
             return View();

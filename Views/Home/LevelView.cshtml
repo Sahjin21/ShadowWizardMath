@@ -58,7 +58,7 @@
             top: 0; /* Adjust the top position as needed */
             left: 0; /* Adjust the left position as needed */
             z-index: 9999; /* Set a high z-index value to make sure the enemy is displayed above other elements */
-            transform: translateY(130px) translateX(700px) scale(2); /* Adjust the scale to make the enemy bigger, if desired */
+            transform: translateY(210px) translateX(1070px) scale(2); /* Adjust the scale to make the enemy bigger, if desired */
         }
         /* Add styles for the player info container */
         .player-info {
@@ -107,24 +107,56 @@
         .answerbox1 {
             position: absolute;
             top: 300px;
-            left: 275px;
-            z-index: 14;
+            left: 310px;
+            z-index: 114;
+            text-align: center;
         }
-
+        .answerbox1-text{
+            transform: translateY(-147%);
+            font-size:24px;
+            top: 0px;
+            left: 310px;
+            color: white;
+            z-index: 206;
+            text-align: center;
+            pointer-events: none;
+        }
         .answerbox2 {
             position: absolute;
-            top: 364px;
-            left: 275px;
-            z-index: 14;
+            top: 434px;
+            left: 660px;
+            z-index: 114;
         }
 
+        .answerbox2-text {
+            transform: translateY(-147%);
+            font-size: 24px;
+            top: 0px;
+            left: 310px;
+            color: white;
+            z-index: 206;
+            text-align: center;
+            pointer-events: none;
+        }
         .answerbox3 {
             position: absolute;
-            top: 428px;
-            left: 275px;
-            z-index: 14;
+            top: 490px;
+            left: 660px;
+            z-index: 114;
+            text-align: center;
+
         }
 
+        .answerbox3-text {
+            transform: translateY(-147%);
+            font-size: 24px;
+            top: 0px;
+            left: 310px;
+            color: white;
+            z-index: 206;
+            text-align: center;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -150,7 +182,7 @@
         <div class="player-info">
             <div class="player-details">
                 <p>@Model.Player.PlayerName</p>
-                <p>Coins: @Model.Player.Coins</p>
+                <p>Coins: <span id="playerCoins">0</span></p>
             </div>
         </div>
         @{
@@ -169,19 +201,42 @@
             <p>@operand1 @operatorString @operand2 = ?</p>
             </div>
         </div>
+        @{
+            var answerOptions = new List<int> { correctAnswer, incorrectAnswer1, incorrectAnswer2 };
+            var shuffledOptions = Shuffle(answerOptions);
 
-        <div class="answerbox1">
-            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox1" />
-            <p>@correctAnswer</p>
-        </div>
-        <div class="answerbox2">
-            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox2" />
-            <p>@incorrectAnswer1</p>
-        </div>
-        <div class="answerbox3">
-            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox3" />
-            <p>@incorrectAnswer2</p>
-        </div>
+            // C# method for shuffling the answer options
+            List<int> Shuffle(List<int> list)
+            {
+                var random = new Random();
+                int n = list.Count;
+                while (n > 1)
+                {
+                    n--;
+                    int k = random.Next(n + 1);
+                    int value = list[k];
+                    list[k] = list[n];
+                    list[n] = value;
+                }
+                return list;
+            }
+        }
+        <!-- Your answer boxes -->
+    <div class="answerbox1">
+        <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox1" />
+         <p class="answerbox1-text">@shuffledOptions[0]</p>
+    </div>
+    </div>
+    <div class="answerbox2">
+        <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox2" />
+        <p class="answerbox2-text">@shuffledOptions[1]</p>
+    </div>
+    <div class="answerbox3">
+        <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox3" />
+        <p class="answerbox3-text">@shuffledOptions[2]</p>
+    </div>
+
+
         <!-- Displaying enemies information -->
         <h2>Enemies:</h2>
         <!-- Displaying the sprite for the first enemy on top of other elements -->
@@ -196,25 +251,36 @@
         <button id="nextStageButton">Next Stage</button>
 
 
+    <script>
+        var enemyData = @Html.Raw(Json.Serialize(ViewBag.levelEnemies));
+    </script>
+    <script>
+        var coins = 0;
+        var currentEnemyIndex = 0;
 
-        <script>
-            $(document).ready(function () {
-                // Function to check the selected answer
-                function checkAnswer(selectedAnswer) {
-                    // Compare the selected answer with the correct answer
-                    if (selectedAnswer === @correctAnswer) {
-                        alert("Correct!"); // You can show a more visually appealing feedback here
-                    } else {
-                        alert("Incorrect!"); // You can show a more visually appealing feedback here
-                    }
+        $(document).ready(function () {
+            // Function to check the selected answer
+            function checkAnswer(selectedAnswer) {
+                // Compare the selected answer with the correct answer
+                if (selectedAnswer === @correctAnswer) {
+                    alert("Correct!"); // You can show a more visually appealing feedback here
+                    coins += 10;
+                } else {
+                    alert("Incorrect!"); // You can show a more visually appealing feedback here
+                    coins -= 5;
                 }
+                $("#playerCoins").text(coins);
+            }
 
-                // Click event handler for the answer boxes
-                $(".answerbox1 img, .answerbox2 img, .answerbox3 img").click(function () {
-                    var selectedAnswer = $(this).siblings("p").text(); // Get the answer text from the sibling paragraph
-                    checkAnswer(parseInt(selectedAnswer));
-                });
+
+            // Click event handler for the answer boxes
+            $(".answerbox1 img, .answerbox2 img, .answerbox3 img").click(function () {
+                var selectedAnswer = $(this).siblings("p").text(); // Get the answer text from the sibling paragraph
+                checkAnswer(parseInt(selectedAnswer));
             });
+
+
+        });
 
 
             // JavaScript/jQuery code for cycling through different backgrounds on button click
@@ -240,6 +306,5 @@
                 });
             });
         </script>
-    </div>
 </body>
 </html>
