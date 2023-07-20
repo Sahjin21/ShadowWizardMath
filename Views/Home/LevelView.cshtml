@@ -81,15 +81,50 @@
             position: absolute;
             top: 15px; /* Adjust the vertical position */
             right: 10px; /* Adjust the horizontal position */
-            z-index: 2; /* Set a higher z-index value to keep it on top */
+            z-index: 11; /* Set a higher z-index value to keep it on top */
             font-size: 16px;
             padding: 10px 20px;
             background-color: #258cfb;
             color: white;
             border: none;
             cursor: pointer;
-            z-index: 11;
         }
+
+        .prompt{
+            position: absolute;
+            top:30px;
+            left:500px;
+            z-index:14;
+            text-align: center;
+
+        }
+
+        .prompt-text {
+            transform: translateY(-150%); 
+            font-size: 32px;
+        }
+
+        .answerbox1 {
+            position: absolute;
+            top: 300px;
+            left: 275px;
+            z-index: 14;
+        }
+
+        .answerbox2 {
+            position: absolute;
+            top: 364px;
+            left: 275px;
+            z-index: 14;
+        }
+
+        .answerbox3 {
+            position: absolute;
+            top: 428px;
+            left: 275px;
+            z-index: 14;
+        }
+
     </style>
 </head>
 <body>
@@ -118,7 +153,35 @@
                 <p>Coins: @Model.Player.Coins</p>
             </div>
         </div>
+        @{
+            var mathProblems = new MathProblems();
+            mathProblems.GenerateMathProblem(out int operand1, out int operand2, out string operatorString, out int correctAnswer);
 
+            // Generate two incorrect answers
+            int incorrectAnswer1 = correctAnswer + 1;
+            int incorrectAnswer2 = correctAnswer - 1;
+        }
+
+        <h2>Prompt</h2>
+        <div class="prompt">
+            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Enemyaskquestion.png" alt="prompt" />
+            <div class="prompt-text">
+            <p>@operand1 @operatorString @operand2 = ?</p>
+            </div>
+        </div>
+
+        <div class="answerbox1">
+            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox1" />
+            <p>@correctAnswer</p>
+        </div>
+        <div class="answerbox2">
+            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox2" />
+            <p>@incorrectAnswer1</p>
+        </div>
+        <div class="answerbox3">
+            <img id="prompt-image" src="~/art/Backgrounds/Regular%20Background/Question-Answer-Box.png" alt="answerbox3" />
+            <p>@incorrectAnswer2</p>
+        </div>
         <!-- Displaying enemies information -->
         <h2>Enemies:</h2>
         <!-- Displaying the sprite for the first enemy on top of other elements -->
@@ -135,6 +198,25 @@
 
 
         <script>
+            $(document).ready(function () {
+                // Function to check the selected answer
+                function checkAnswer(selectedAnswer) {
+                    // Compare the selected answer with the correct answer
+                    if (selectedAnswer === @correctAnswer) {
+                        alert("Correct!"); // You can show a more visually appealing feedback here
+                    } else {
+                        alert("Incorrect!"); // You can show a more visually appealing feedback here
+                    }
+                }
+
+                // Click event handler for the answer boxes
+                $(".answerbox1 img, .answerbox2 img, .answerbox3 img").click(function () {
+                    var selectedAnswer = $(this).siblings("p").text(); // Get the answer text from the sibling paragraph
+                    checkAnswer(parseInt(selectedAnswer));
+                });
+            });
+
+
             // JavaScript/jQuery code for cycling through different backgrounds on button click
             $(document).ready(function () {
                 var backgrounds = [
