@@ -9,21 +9,19 @@
     @*import JQuery*@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
 </head>
 <body>
     <!-- Game container -->
     <div id="game-container">
-        <!-- Frame container -->
-        <div id="frame-container">
-            <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png')"></div>
-            <div id="main-frame"></div>
-        </div>
+
         <!-- This pulls the level from the controller 'level.Stage = 1;' -->
         <h1>Level @Model.Stage</h1>
 
         <!-- This declares the file name of the background image which is set by the stage. -->
         @if (Model.Stage == 1)
         {
+            <div class="frame-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png')"></div>
             <div class="background-layer" style="background-image: url('/art/Backgrounds/Regular%20Background/Backgroundrunner.png')"></div>
         }
         <!-- Displaying player information -->
@@ -143,18 +141,37 @@
                     "/art/Backgrounds/Purple%20Background/Purple-Backgroundrunner.png",
                     "/art/Backgrounds/Red%20Background/Red-Backgroundrunner.png",
                 ];
+            var frameBackgrounds = [
+                "/art/Backgrounds/Regular%20Background/MainBackgroundFrame.png",
+                "/art/Backgrounds/Black%20Background/Black-MainBackgroundFrame.png",
+                "/art/Backgrounds/Blue%20Background/Blue-MainBackgroundFrame.png",
+                "/art/Backgrounds/Green%20Background/Green-MainBackgroundFrame.png",
+                "/art/Backgrounds/Purple%20Background/Purple-MainBackgroundFrame.png",
+                "/art/Backgrounds/Red%20Background/Red-MainBackgroundFrame.png",
+            ];
 
-                var currentIndex = 0;
+            var currentIndex = 0;
 
-                $("#nextStageButton").click(function () {
-                    currentIndex++;
-                    if (currentIndex >= backgrounds.length) {
-                        currentIndex = 0;
-                    }
+            function updateBackgrounds() {
+                var background = backgrounds[currentIndex];
+                var frameBackground = frameBackgrounds[currentIndex];
 
-                    $(".background-layer").css("background-image", "url(" + backgrounds[currentIndex] + ")");
-                });
+                $(".background-layer").css("background-image", "url(" + background + ")");
+                $(".frame-layer").css("background-image", "url(" + frameBackground + ")");
+            }
+
+            // Initial background setup
+            updateBackgrounds();
+
+            $("#nextStageButton").click(function () {
+                currentIndex++;
+                if (currentIndex >= backgrounds.length) {
+                    currentIndex = 0;
+                }
+
+                updateBackgrounds();
             });
+        });
         </script>
 </body>
 </html>

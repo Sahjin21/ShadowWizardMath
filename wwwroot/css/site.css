@@ -6,15 +6,6 @@
     position: relative;
     overflow: hidden;
 }
-#frame-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1152px;
-    height: 400px;
-    overflow: hidden;
-    z-index: 10;
-}
 
 #nextStageButton {
     position: absolute;
@@ -42,41 +33,7 @@
     z-index: 9999;
     transform: translateY(210px) translateX(1070px) scale(2);
 }
-.background-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1152px;
-    height: 400px;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    animation: scrollBackground 10s linear infinite;
-}
-.player-details {
-    margin-left: 10px;
-}
 
-.player-info {
-    position: absolute;
-    top: 370px;
-    left: 100px;
-    font-size: 20px;
-    color: white;
-    display: flex;
-    align-items: center;
-    transform: scale(2);
-}
-.prompt {
-    position: absolute;
-    top: 30px;
-    left: 500px;
-    z-index: 14;
-    text-align: center;
-}
-.prompt-text {
-    transform: translateY(-150%);
-    font-size: 32px;
-}
 
 .answerbox1 {
     position: absolute;
@@ -132,4 +89,52 @@
     z-index: 206;
     text-align: center;
     pointer-events: none;
+}
+
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1152px;
+    height: 400px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    animation: scrollBackground 10s linear infinite;
+}
+.frame-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1152px;
+    height: 400px;
+    overflow: hidden;
+    z-index: 10;
+    background-repeat: no-repeat;
+}
+
+.player-details {
+    margin-left: 10px;
+}
+.player-info {
+    position: absolute;
+    top: 370px;
+    left: 100px;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    transform: scale(2);
+}
+
+.prompt {
+    position: absolute;
+    top: 30px;
+    left: 500px;
+    z-index: 14;
+    text-align: center;
+}
+
+.prompt-text {
+    transform: translateY(-150%);
+    font-size: 32px;
 }
