@@ -91,7 +91,7 @@
         @if (ViewBag.levelEnemies.Count > 0)
         {
             var firstEnemy = ViewBag.levelEnemies[0];
-            <img id="first-enemy" src="@firstEnemy.sprite" alt="Enemy">
+            <img id="enemy-image" src="@firstEnemy.sprite" alt="Enemy">
         }
 
 
@@ -101,12 +101,15 @@
 
     <script>
         var enemyData = @Html.Raw(Json.Serialize(ViewBag.levelEnemies));
-    </script>
-    <script>
         var coins = 0;
         var currentEnemyIndex = 0;
 
         $(document).ready(function () {
+
+            function updateEnemyImage() {
+                var enemy = enemyData[currentEnemyIndex];
+                $("#enemy-image").attr("src", enemy.sprite);
+            }
             // Function to check the selected answer
             function checkAnswer(selectedAnswer) {
                 // Compare the selected answer with the correct answer
@@ -118,6 +121,16 @@
                     coins -= 5;
                 }
                 $("#playerCoins").text(coins);
+
+                // Move on to the next enemy
+                currentEnemyIndex++;
+                if (currentEnemyIndex >= enemyData.length) {
+                    alert("All enemies defeated!");
+                    // Implement your logic for reaching the end of the level or game here
+                } else {
+                    updatePromptAndAnswers(); // Update the prompt and answers with new values
+                    updateEnemyImage(); // Update the enemy's image
+                }
             }
 
 
@@ -173,5 +186,29 @@
             });
         });
         </script>
+    <script>
+        // Function to update the prompt and answer options with new values
+        function updatePromptAndAnswers() {
+            // Generate a new math problem
+            var mathProblems = new MathProblems();
+            var operand1, operand2, operatorString, correctAnswer;
+            mathProblems.GenerateMathProblem(out operand1, out operand2, out operatorString, out correctAnswer);
+
+            // Generate two incorrect answers
+            var incorrectAnswer1 = correctAnswer + 1;
+            var incorrectAnswer2 = correctAnswer - 1;
+
+            // Shuffle the answer options
+            var answerOptions = [correctAnswer, incorrectAnswer1, incorrectAnswer2];
+            var shuffledOptions = Shuffle(answerOptions);
+
+            // Update the prompt and answer options in the HTML
+            $(".prompt-text p").text(operand1 + " " + operatorString + " " + operand2 + " = ?");
+            $(".answerbox1-text").text(shuffledOptions[0]);
+            $(".answerbox2-text").text(shuffledOptions[1]);
+            $(".answerbox3-text").text(shuffledOptions[2]);
+        }
+    </script>
+
 </body>
 </html>

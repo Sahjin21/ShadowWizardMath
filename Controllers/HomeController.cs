@@ -51,8 +51,7 @@ namespace ShadowWizardMath.Controllers
             // Get the player object from ViewBag or ViewData
             var player = ViewBag.Player as Player; 
             // Update the player's coins
-            player.Coins += coinsToAdd;
-            
+            player.Coins += coinsToAdd;   
 
             // Return a JSON response indicating success
             return Json(new { success = true });
