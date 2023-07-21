@@ -1,32 +1,135 @@
-
 #game-container {
-    width: 852px;
+    width: 1152px;
     height: 500px;
     margin: 0 auto;
     background-color: black;
     position: relative;
-    padding: 0;
     overflow: hidden;
 }
+#frame-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1152px;
+    height: 400px;
+    overflow: hidden;
+    z-index: 10;
+}
 
+#nextStageButton {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 11;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #258cfb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#character-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transform: translateY(130px) translateX(130px) scale(2);
+}
+#first-enemy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transform: translateY(210px) translateX(1070px) scale(2);
+}
 .background-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 1152px;
-    height: 288px; 
+    height: 400px;
     background-size: 100% auto;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     animation: scrollBackground 10s linear infinite;
 }
-
-#frame-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 12562px; 
-    height: 288px; 
-    overflow: hidden; 
+.player-details {
+    margin-left: 10px;
 }
 
+.player-info {
+    position: absolute;
+    top: 370px;
+    left: 100px;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    transform: scale(2);
+}
+.prompt {
+    position: absolute;
+    top: 30px;
+    left: 500px;
+    z-index: 14;
+    text-align: center;
+}
+.prompt-text {
+    transform: translateY(-150%);
+    font-size: 32px;
+}
 
+.answerbox1 {
+    position: absolute;
+    top: 300px;
+    left: 310px;
+    z-index: 114;
+    text-align: center;
+}
+
+.answerbox1-text {
+    transform: translateY(-147%);
+    font-size: 24px;
+    top: 0px;
+    left: 310px;
+    color: white;
+    z-index: 206;
+    text-align: center;
+    pointer-events: none;
+}
+
+.answerbox2 {
+    position: absolute;
+    top: 434px;
+    left: 660px;
+    z-index: 114;
+}
+
+.answerbox2-text {
+    transform: translateY(-147%);
+    font-size: 24px;
+    top: 0px;
+    left: 310px;
+    color: white;
+    z-index: 206;
+    text-align: center;
+    pointer-events: none;
+}
+
+.answerbox3 {
+    position: absolute;
+    top: 490px;
+    left: 660px;
+    z-index: 114;
+    text-align: center;
+}
+
+.answerbox3-text {
+    transform: translateY(-147%);
+    font-size: 24px;
+    top: 0px;
+    left: 310px;
+    color: white;
+    z-index: 206;
+    text-align: center;
+    pointer-events: none;
+}
