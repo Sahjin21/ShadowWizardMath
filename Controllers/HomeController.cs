@@ -42,7 +42,6 @@ namespace ShadowWizardMath.Controllers
             level.Player.Health = 100;
             level.Player.Coins = 0;
 
-            //System.Diagnostics.Debug.WriteLine();
             // Pass the level object to the view
             return View(level);
         }
@@ -50,7 +49,7 @@ namespace ShadowWizardMath.Controllers
         public IActionResult UpdateCoins(int coinsToAdd)
         {
             // Get the player object from ViewBag or ViewData
-            var player = ViewBag.Player as Player; // Or use ViewData["Player"] as Player;
+            var player = ViewBag.Player as Player; 
             // Update the player's coins
             player.Coins += coinsToAdd;
             
